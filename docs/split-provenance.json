@@ -1,0 +1,457 @@
+{
+  "upstream": "https://github.com/mzaprudin/zero-alloc-json-ws",
+  "revision": "02f7aefda0933e9a719616ec72bf6f11fc5dd9a8",
+  "license": "No open-source license granted; original NOTICE preserved.",
+  "changes": [
+    "Build/package boundaries, global imports and friend assemblies",
+    "PoolRental<T> is internal in each assembly",
+    "JSON routing implementations moved verbatim from benchmark file to library; namespaces preserved",
+    "Harness paths and standalone samples/scripts"
+  ],
+  "files": [
+    {
+      "source": ".editorconfig",
+      "destination": ".editorconfig",
+      "sourceSha256": "c4d97053b2457957918f51620da68f6d7f7fd5137e944b00c82588230320b774",
+      "destinationSha256": "c4d97053b2457957918f51620da68f6d7f7fd5137e944b00c82588230320b774"
+    },
+    {
+      "source": ".gitattributes",
+      "destination": ".gitattributes",
+      "sourceSha256": "a177afd6d9fae872964ab8bf53e4f455b9add510f91ad8a7b609022f8b368e8f",
+      "destinationSha256": "a177afd6d9fae872964ab8bf53e4f455b9add510f91ad8a7b609022f8b368e8f"
+    },
+    {
+      "source": ".gitignore",
+      "destination": ".gitignore",
+      "sourceSha256": "efb625010fd28f0119d5cf4d5e384cb15d802f36ebb9d314c992651a4a89c315",
+      "destinationSha256": "da889541671b0fc366484bcc25a86e1f772fc6c72ba97519e4c9a32a9db02a47"
+    },
+    {
+      "source": "Directory.Build.props",
+      "destination": "Directory.Build.props",
+      "sourceSha256": "d89fd08ec70ebb27deb05f7aa253a77bd48c8639f46d9bba09ffac9bcfcbcc62",
+      "destinationSha256": "d89fd08ec70ebb27deb05f7aa253a77bd48c8639f46d9bba09ffac9bcfcbcc62"
+    },
+    {
+      "source": "global.json",
+      "destination": "global.json",
+      "sourceSha256": "b48d6da8fa62c0da7cc8a2da4ea036ac55836660a448ba533135abb5b8451b73",
+      "destinationSha256": "b48d6da8fa62c0da7cc8a2da4ea036ac55836660a448ba533135abb5b8451b73"
+    },
+    {
+      "source": "NOTICE",
+      "destination": "NOTICE",
+      "sourceSha256": "3456e85ed7e22ab53408ab9259e874a5922770f0023d2ea23465027fbf9473ea",
+      "destinationSha256": "3456e85ed7e22ab53408ab9259e874a5922770f0023d2ea23465027fbf9473ea"
+    },
+    {
+      "source": "benchmarks/GapSonar.TransportLab.Benchmarks/JsonBenchmarks.cs",
+      "destination": "benchmarks/ZeroAlloc.Json.Benchmarks/JsonBenchmarks.cs",
+      "sourceSha256": "594f14c2d96f6fa24666137653c32cf845333cc5db1fdc1b2bc1fdd747e04d79",
+      "destinationSha256": "594f14c2d96f6fa24666137653c32cf845333cc5db1fdc1b2bc1fdd747e04d79"
+    },
+    {
+      "source": "benchmarks/GapSonar.TransportLab.Benchmarks/Original/Models.cs",
+      "destination": "benchmarks/ZeroAlloc.Json.Benchmarks/Original/Models.cs",
+      "sourceSha256": "686bef10f1d9349a67379e6f13c508a990005a3c90e9aa4aba86559a674df08d",
+      "destinationSha256": "686bef10f1d9349a67379e6f13c508a990005a3c90e9aa4aba86559a674df08d"
+    },
+    {
+      "source": "benchmarks/GapSonar.TransportLab.Benchmarks/Original/PopulatorBenchmarks.cs",
+      "destination": "benchmarks/ZeroAlloc.Json.Benchmarks/Original/PopulatorBenchmarks.cs",
+      "sourceSha256": "555b817d6463fff84b882102ce0b235581d4d0a413eb1a8414e0570585a1da89",
+      "destinationSha256": "555b817d6463fff84b882102ce0b235581d4d0a413eb1a8414e0570585a1da89"
+    },
+    {
+      "source": "benchmarks/GapSonar.TransportLab.Benchmarks/Original/PushulatorBenchmarks.cs",
+      "destination": "benchmarks/ZeroAlloc.Json.Benchmarks/Original/PushulatorBenchmarks.cs",
+      "sourceSha256": "9ab1e727a62d7af9f2c82371c2df349b73db409069b70d3ea18d56e4d5d9f4e9",
+      "destinationSha256": "9ab1e727a62d7af9f2c82371c2df349b73db409069b70d3ea18d56e4d5d9f4e9"
+    },
+    {
+      "source": "benchmarks/GapSonar.TransportLab.Benchmarks/Original/RouterBenchmarks.cs",
+      "destination": "benchmarks/ZeroAlloc.Json.Benchmarks/Original/RouterBenchmarks.cs",
+      "sourceSha256": "bb0a559cfd0adb4d24eac9adf2e816dfed74f2ecf613915ee6000977d6cb6fb2",
+      "destinationSha256": "a1f266b8ced51df969a7707d2daea2e3b8610c27903137d22f49399b0e418002"
+    },
+    {
+      "source": "benchmarks/GapSonar.TransportLab.Benchmarks/Original/RouterContracts.cs",
+      "destination": "src/ZeroAlloc.Json/Routing/RouterContracts.cs",
+      "sourceSha256": "0d0ba0373c4de3a36a6434c67433aedd5f623fd40dbe8dd209f771161b72a87a",
+      "destinationSha256": "0d0ba0373c4de3a36a6434c67433aedd5f623fd40dbe8dd209f771161b72a87a"
+    },
+    {
+      "source": "benchmarks/GapSonar.TransportLab.Benchmarks/Program.cs",
+      "destination": "benchmarks/ZeroAlloc.Json.Benchmarks/Program.cs",
+      "sourceSha256": "01335ef932249d28708859cddc5afb4263062e29f269834ac1afa12fa13289f7",
+      "destinationSha256": "01335ef932249d28708859cddc5afb4263062e29f269834ac1afa12fa13289f7"
+    },
+    {
+      "source": "docs/extraction.md",
+      "destination": "docs/upstream/extraction.md",
+      "sourceSha256": "2e10b2fdc931216b66f8a034c534872781477a8d173d23d4a8135db615e0e6d2",
+      "destinationSha256": "2e10b2fdc931216b66f8a034c534872781477a8d173d23d4a8135db615e0e6d2"
+    },
+    {
+      "source": "docs/original-benchmarks-provenance.json",
+      "destination": "docs/upstream/original-benchmarks-provenance.json",
+      "sourceSha256": "18a05944b0437f5e011a13195f1dd1484ac2daf99fe3a5bf692db296d6ba2178",
+      "destinationSha256": "18a05944b0437f5e011a13195f1dd1484ac2daf99fe3a5bf692db296d6ba2178"
+    },
+    {
+      "source": "docs/source-manifest.txt",
+      "destination": "docs/upstream/source-manifest.txt",
+      "sourceSha256": "c837055d841c4015ef20ca0a8edae5d28f17112735a1856d6e927bfb36a3dbc8",
+      "destinationSha256": "c837055d841c4015ef20ca0a8edae5d28f17112735a1856d6e927bfb36a3dbc8"
+    },
+    {
+      "source": "docs/source-provenance.json",
+      "destination": "docs/upstream/source-provenance.json",
+      "sourceSha256": "478cce6d865fdf661e2284ef0f72a5877e023d81f427219a92b13d4b184650a2",
+      "destinationSha256": "478cce6d865fdf661e2284ef0f72a5877e023d81f427219a92b13d4b184650a2"
+    },
+    {
+      "source": "fixtures/README.md",
+      "destination": "fixtures/README.md",
+      "sourceSha256": "3b032e2c299559e4e5a7f6817f857f64d85ac07564328342a7c6e523ffeb9a2d",
+      "destinationSha256": "3b032e2c299559e4e5a7f6817f857f64d85ac07564328342a7c6e523ffeb9a2d"
+    },
+    {
+      "source": "fixtures/gate.futures.contracts.all.json",
+      "destination": "fixtures/gate.futures.contracts.all.json",
+      "sourceSha256": "39fc6f05b2b86539023feb568b6acbeb20cb292b9693614aad8a81606546a1b2",
+      "destinationSha256": "39fc6f05b2b86539023feb568b6acbeb20cb292b9693614aad8a81606546a1b2"
+    },
+    {
+      "source": "fixtures/gate.futures.contracts.json",
+      "destination": "fixtures/gate.futures.contracts.json",
+      "sourceSha256": "0a6479d48b87a3c7dbc4aea01d91cf40dd18653d08031443c57e174c487d4159",
+      "destinationSha256": "0a6479d48b87a3c7dbc4aea01d91cf40dd18653d08031443c57e174c487d4159"
+    },
+    {
+      "source": "fixtures/trade.json",
+      "destination": "fixtures/trade.json",
+      "sourceSha256": "0aed51f1f0ccebd39b5d37bfa9aa0402dd2aa438670a7ea3021952fa586cc34a",
+      "destinationSha256": "0aed51f1f0ccebd39b5d37bfa9aa0402dd2aa438670a7ea3021952fa586cc34a"
+    },
+    {
+      "source": "results/historical/json-populator-earlier.csv",
+      "destination": "results/historical/json-populator-earlier.csv",
+      "sourceSha256": "478fd5b3c805e70fd9fc02a3603cb0c1e60a23cb3439b668586a52184102f501",
+      "destinationSha256": "478fd5b3c805e70fd9fc02a3603cb0c1e60a23cb3439b668586a52184102f501"
+    },
+    {
+      "source": "results/historical/json-populator-earlier.md",
+      "destination": "results/historical/json-populator-earlier.md",
+      "sourceSha256": "76ecf8c289cb81fb435949da432b8240ffcab5318ab02a0f912e048701fb9c0c",
+      "destinationSha256": "76ecf8c289cb81fb435949da432b8240ffcab5318ab02a0f912e048701fb9c0c"
+    },
+    {
+      "source": "results/historical/json-populator.csv",
+      "destination": "results/historical/json-populator.csv",
+      "sourceSha256": "34aa97451621b63ee9e1995e5670832075b5636e2c9db61e49ba9fa9fe85e615",
+      "destinationSha256": "34aa97451621b63ee9e1995e5670832075b5636e2c9db61e49ba9fa9fe85e615"
+    },
+    {
+      "source": "results/historical/json-populator.md",
+      "destination": "results/historical/json-populator.md",
+      "sourceSha256": "83116db8f63af196ca31671f6eb5d694e26371d0adf0234c30e9bd405a4e6cdc",
+      "destinationSha256": "83116db8f63af196ca31671f6eb5d694e26371d0adf0234c30e9bd405a4e6cdc"
+    },
+    {
+      "source": "results/historical/json-pushulator.csv",
+      "destination": "results/historical/json-pushulator.csv",
+      "sourceSha256": "f1720720f2cdf459663fbe596442260ba7f50b7194aefc87a315d3b7f4ffead2",
+      "destinationSha256": "f1720720f2cdf459663fbe596442260ba7f50b7194aefc87a315d3b7f4ffead2"
+    },
+    {
+      "source": "results/historical/json-pushulator.md",
+      "destination": "results/historical/json-pushulator.md",
+      "sourceSha256": "9928728f6ef7c2ce18160b0595d7b27e46c90e977746fbb375720a54523453f3",
+      "destinationSha256": "9928728f6ef7c2ce18160b0595d7b27e46c90e977746fbb375720a54523453f3"
+    },
+    {
+      "source": "results/historical/json-routing.csv",
+      "destination": "results/historical/json-routing.csv",
+      "sourceSha256": "f7d8c7e933a98d196f9f08e190ee8afa7d48c505a763ecd615bc23029af8d4f1",
+      "destinationSha256": "f7d8c7e933a98d196f9f08e190ee8afa7d48c505a763ecd615bc23029af8d4f1"
+    },
+    {
+      "source": "results/historical/json-routing.md",
+      "destination": "results/historical/json-routing.md",
+      "sourceSha256": "21523d9a352154e87c4a6b51d826afd4e364425eb84ec422a8c885296f72c057",
+      "destinationSha256": "21523d9a352154e87c4a6b51d826afd4e364425eb84ec422a8c885296f72c057"
+    },
+    {
+      "source": "results/json-parsing.csv",
+      "destination": "results/json-parsing.csv",
+      "sourceSha256": "2aa59beb5d94ebeaa0b47c9223ced95ef6188b11338baaf0c3d64cc6bcf149e4",
+      "destinationSha256": "2aa59beb5d94ebeaa0b47c9223ced95ef6188b11338baaf0c3d64cc6bcf149e4"
+    },
+    {
+      "source": "results/json-parsing.json",
+      "destination": "results/json-parsing.json",
+      "sourceSha256": "2f9e043dcdc747bc63557ddf94745bf54c707c7c0064b204102ac01a4e655cec",
+      "destinationSha256": "2f9e043dcdc747bc63557ddf94745bf54c707c7c0064b204102ac01a4e655cec"
+    },
+    {
+      "source": "results/json-parsing.md",
+      "destination": "results/json-parsing.md",
+      "sourceSha256": "a3fa0e232ea8eb9caeea2cea032634e0bade2760b0bbcdbc616adad944c58bd6",
+      "destinationSha256": "a3fa0e232ea8eb9caeea2cea032634e0bade2760b0bbcdbc616adad944c58bd6"
+    },
+    {
+      "source": "results/json-writing.csv",
+      "destination": "results/json-writing.csv",
+      "sourceSha256": "b604c45081da266927b330006a5724817facfd31686e7f1613c5f5965380fde6",
+      "destinationSha256": "b604c45081da266927b330006a5724817facfd31686e7f1613c5f5965380fde6"
+    },
+    {
+      "source": "results/json-writing.json",
+      "destination": "results/json-writing.json",
+      "sourceSha256": "acf1107df3a2b1d9150bc334c0cf3617576ecbd8fc9e5060a95d99d4db2861e3",
+      "destinationSha256": "acf1107df3a2b1d9150bc334c0cf3617576ecbd8fc9e5060a95d99d4db2861e3"
+    },
+    {
+      "source": "results/json-writing.md",
+      "destination": "results/json-writing.md",
+      "sourceSha256": "e69c8d1985812fd571c4c9d757647ef68ec6520541905f31180bc8f464d0d714",
+      "destinationSha256": "e69c8d1985812fd571c4c9d757647ef68ec6520541905f31180bc8f464d0d714"
+    },
+    {
+      "source": "results/original/json-populator.csv",
+      "destination": "results/original/json-populator.csv",
+      "sourceSha256": "aa9c4f5ebb2516919e52743832bd2345f81eb2fc8c3c406875058ff66b213530",
+      "destinationSha256": "aa9c4f5ebb2516919e52743832bd2345f81eb2fc8c3c406875058ff66b213530"
+    },
+    {
+      "source": "results/original/json-populator.json",
+      "destination": "results/original/json-populator.json",
+      "sourceSha256": "9f9e6029180bc89cb0ae042699fea2a657051a1f86ab71af3e9606f4cef8a385",
+      "destinationSha256": "9f9e6029180bc89cb0ae042699fea2a657051a1f86ab71af3e9606f4cef8a385"
+    },
+    {
+      "source": "results/original/json-populator.md",
+      "destination": "results/original/json-populator.md",
+      "sourceSha256": "ea3f9145caa1dade174fa3b7a0ba803bf280744972d7bbee92675328514504b8",
+      "destinationSha256": "ea3f9145caa1dade174fa3b7a0ba803bf280744972d7bbee92675328514504b8"
+    },
+    {
+      "source": "results/original/json-pushulator.csv",
+      "destination": "results/original/json-pushulator.csv",
+      "sourceSha256": "633c720db4069bc698b98598d1d256c8c704435ff0265a81edbbf1a34d704081",
+      "destinationSha256": "633c720db4069bc698b98598d1d256c8c704435ff0265a81edbbf1a34d704081"
+    },
+    {
+      "source": "results/original/json-pushulator.json",
+      "destination": "results/original/json-pushulator.json",
+      "sourceSha256": "3d1b0ca643ec67561fe9a4cb13e000d6443073d5387be29a3c4843b6d4e00132",
+      "destinationSha256": "3d1b0ca643ec67561fe9a4cb13e000d6443073d5387be29a3c4843b6d4e00132"
+    },
+    {
+      "source": "results/original/json-pushulator.md",
+      "destination": "results/original/json-pushulator.md",
+      "sourceSha256": "961e935f8639e499f95c808c370d3c14e77cf6c9191981cb62086cd51e4e233d",
+      "destinationSha256": "961e935f8639e499f95c808c370d3c14e77cf6c9191981cb62086cd51e4e233d"
+    },
+    {
+      "source": "results/original/json-routing.csv",
+      "destination": "results/original/json-routing.csv",
+      "sourceSha256": "03ebde2f9a2e859e2c7bae240e3e4bf9d27110e9b9bd878689b8c0669c8ab941",
+      "destinationSha256": "03ebde2f9a2e859e2c7bae240e3e4bf9d27110e9b9bd878689b8c0669c8ab941"
+    },
+    {
+      "source": "results/original/json-routing.json",
+      "destination": "results/original/json-routing.json",
+      "sourceSha256": "815c2c36a38d345852f953fdcb84a375e7e460f6d3eb42023c2e09e78aeb029e",
+      "destinationSha256": "815c2c36a38d345852f953fdcb84a375e7e460f6d3eb42023c2e09e78aeb029e"
+    },
+    {
+      "source": "results/original/json-routing.md",
+      "destination": "results/original/json-routing.md",
+      "sourceSha256": "125141fb0a9e29d02f8245f54b1bf1101dd8e95085afcb77a3b9543b91b7febc",
+      "destinationSha256": "125141fb0a9e29d02f8245f54b1bf1101dd8e95085afcb77a3b9543b91b7febc"
+    },
+    {
+      "source": "results/original/source-snapshot.json",
+      "destination": "results/original/source-snapshot.json",
+      "sourceSha256": "82de52908a7406f551d304bf5bc1ce92a62cfe7a978a80ef89f98fc2d6ebc2b2",
+      "destinationSha256": "82de52908a7406f551d304bf5bc1ce92a62cfe7a978a80ef89f98fc2d6ebc2b2"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Collections/FastList.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Collections/FastList.cs",
+      "sourceSha256": "a9528e08e05b48f675f0155cfea228fb2e0b7ab7596db5d228eea7ab35fc1566",
+      "destinationSha256": "a9528e08e05b48f675f0155cfea228fb2e0b7ab7596db5d228eea7ab35fc1566"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Collections/PoolRental.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Collections/PoolRental.cs",
+      "sourceSha256": "de169b1a9488d6c78069daa7e9031a6f078f56e5fb4f724d7a1e97ca3f9aba94",
+      "destinationSha256": "195ef54b88061eb48f12c7f20eee5b3822ad7180f5220a879ae5280e3fa77fc2"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/FastJsonParser.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Serialization/FastJsonParser.cs",
+      "sourceSha256": "8e0fb419e92a91cc19e7f2bf142b755d8e3ff4b1b99addf763267123ef96317f",
+      "destinationSha256": "8e0fb419e92a91cc19e7f2bf142b755d8e3ff4b1b99addf763267123ef96317f"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/FixedStringHelpers.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Serialization/FixedStringHelpers.cs",
+      "sourceSha256": "487c4409e752eca24cd7661d5aab7d7a2fb3d82c6a4e355411c37920cb9c15ce",
+      "destinationSha256": "487c4409e752eca24cd7661d5aab7d7a2fb3d82c6a4e355411c37920cb9c15ce"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/IFixedString.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Serialization/IFixedString.cs",
+      "sourceSha256": "8d602f1d12ecad181f04386f149ddab24fd7cc72fc345da15bbfcb0e74629049",
+      "destinationSha256": "8d602f1d12ecad181f04386f149ddab24fd7cc72fc345da15bbfcb0e74629049"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/JsonInternAttribute.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Serialization/JsonInternAttribute.cs",
+      "sourceSha256": "d9baf8c2451dfc63752d12bf2fd83a15881ef1e7e6f56e512f04287bca0c42c1",
+      "destinationSha256": "d9baf8c2451dfc63752d12bf2fd83a15881ef1e7e6f56e512f04287bca0c42c1"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/JsonPopulator.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Serialization/JsonPopulator.cs",
+      "sourceSha256": "cdfccc14623363069c6f5d752e735ea2d4317d478206f2756f0d0a207be4733f",
+      "destinationSha256": "cdfccc14623363069c6f5d752e735ea2d4317d478206f2756f0d0a207be4733f"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/JsonPositionAttribute.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Serialization/JsonPositionAttribute.cs",
+      "sourceSha256": "e29da0eb50ac91e56ab601a77a5b25db225c24021c9771a37a64d389c5dce18d",
+      "destinationSha256": "e29da0eb50ac91e56ab601a77a5b25db225c24021c9771a37a64d389c5dce18d"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/JsonPushulator.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Serialization/JsonPushulator.cs",
+      "sourceSha256": "bbbb8f67838ad13eb50df39ed3b1eba818fa4024f8a5ef44b3f29f558db09065",
+      "destinationSha256": "bbbb8f67838ad13eb50df39ed3b1eba818fa4024f8a5ef44b3f29f558db09065"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/JsonPushulatorAttributes.cs",
+      "destination": "src/ZeroAlloc.Json/Infrastructure/Serialization/JsonPushulatorAttributes.cs",
+      "sourceSha256": "c866e65924e34a81c761fca2d76316d4189842ed1f4320c59eb02e4d9194818a",
+      "destinationSha256": "c866e65924e34a81c761fca2d76316d4189842ed1f4320c59eb02e4d9194818a"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/SharedKernel/ExchangeId.cs",
+      "destination": "src/ZeroAlloc.Json/SharedKernel/ExchangeId.cs",
+      "sourceSha256": "8025e3601bf51e749a060b967965b2f0c79c0824eaffa8d39b5c7ee179bb90f4",
+      "destinationSha256": "8025e3601bf51e749a060b967965b2f0c79c0824eaffa8d39b5c7ee179bb90f4"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/SharedKernel/Shared.cs",
+      "destination": "src/ZeroAlloc.Json/SharedKernel/Shared.cs",
+      "sourceSha256": "e72c55db8a16b1568ffd6d52bcfee75280a0a578936a9c45fb2b1a3c3dd5305b",
+      "destinationSha256": "e72c55db8a16b1568ffd6d52bcfee75280a0a578936a9c45fb2b1a3c3dd5305b"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/SharedKernel/SymbolId.cs",
+      "destination": "src/ZeroAlloc.Json/SharedKernel/SymbolId.cs",
+      "sourceSha256": "9cff8ec23ce6eac53f816a61311d7cc0947119df415fcf47650f1c1329cb968d",
+      "destinationSha256": "9cff8ec23ce6eac53f816a61311d7cc0947119df415fcf47650f1c1329cb968d"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/SharedKernel/SymbolType.cs",
+      "destination": "src/ZeroAlloc.Json/SharedKernel/SymbolType.cs",
+      "sourceSha256": "d322cb1d096944c86d18415b67d98f15832187e2305e92ae8ecee50a5f0cf8b9",
+      "destinationSha256": "d322cb1d096944c86d18415b67d98f15832187e2305e92ae8ecee50a5f0cf8b9"
+    },
+    {
+      "source": "support/Trade.cs",
+      "destination": "support/Trade.cs",
+      "sourceSha256": "fa4180cfdfab1d12de616f79055a43e7f81f93803e7126049de8be8c7a6d33db",
+      "destinationSha256": "fa4180cfdfab1d12de616f79055a43e7f81f93803e7126049de8be8c7a6d33db"
+    },
+    {
+      "source": "tests/GapSonar.TransportLab.Tests/JsonPopulatorEnhancedTests.cs",
+      "destination": "tests/ZeroAlloc.Json.Tests/JsonPopulatorEnhancedTests.cs",
+      "sourceSha256": "f8e9eb446495f72f6d9539a55c6e30e6cb3d54f4303121aeeda48a7b0d2d8c60",
+      "destinationSha256": "f8e9eb446495f72f6d9539a55c6e30e6cb3d54f4303121aeeda48a7b0d2d8c60"
+    },
+    {
+      "source": "tests/GapSonar.TransportLab.Tests/JsonPopulatorGuidTests.cs",
+      "destination": "tests/ZeroAlloc.Json.Tests/JsonPopulatorGuidTests.cs",
+      "sourceSha256": "14ed47fd12a66882ecbb23709dbd68ac72c8c9b43533c7c0c5f1096575ec3cf3",
+      "destinationSha256": "14ed47fd12a66882ecbb23709dbd68ac72c8c9b43533c7c0c5f1096575ec3cf3"
+    },
+    {
+      "source": "tests/GapSonar.TransportLab.Tests/JsonPopulatorTests.cs",
+      "destination": "tests/ZeroAlloc.Json.Tests/JsonPopulatorTests.cs",
+      "sourceSha256": "630da0b8efebe500f1546c16b2889338d811201347c430ba5ac7002fca693f6f",
+      "destinationSha256": "630da0b8efebe500f1546c16b2889338d811201347c430ba5ac7002fca693f6f"
+    },
+    {
+      "source": "tests/GapSonar.TransportLab.Tests/JsonPushulatorTests.cs",
+      "destination": "tests/ZeroAlloc.Json.Tests/JsonPushulatorTests.cs",
+      "sourceSha256": "49310c08a2b9cfff71839442b0d423d13357b54e3a00b4eca7c2e20914ca33fc",
+      "destinationSha256": "49310c08a2b9cfff71839442b0d423d13357b54e3a00b4eca7c2e20914ca33fc"
+    },
+    {
+      "source": "tests/GapSonar.TransportLab.Tests/ParserContractTests.cs",
+      "destination": "tests/ZeroAlloc.Json.Tests/ParserContractTests.cs",
+      "sourceSha256": "8c89cb7fd06fbdfaa2e283877cc855c5059a7067ae6f8a058914b9c1f39b71ba",
+      "destinationSha256": "8c89cb7fd06fbdfaa2e283877cc855c5059a7067ae6f8a058914b9c1f39b71ba"
+    },
+    {
+      "source": "benchmarks/GapSonar.TransportLab.Benchmarks/Original/RouterBenchmarks.cs",
+      "destination": "src/ZeroAlloc.Json/Routing/MessageRouters.cs",
+      "sourceSha256": "bb0a559cfd0adb4d24eac9adf2e816dfed74f2ecf613915ee6000977d6cb6fb2",
+      "destinationSha256": "975757b5f679f125625d8fe14ea76ef5398a385fdf957dcdc7eb72768c613587"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/AssemblyInfo.cs",
+      "destination": "src/ZeroAlloc.Json/AssemblyInfo.cs",
+      "sourceSha256": "f8081bb1a84f1f8f0a23bca79eb85396b12bc5a60163a6fe184ac779817c0f65",
+      "destinationSha256": "97a90582a4ad5a298344d7b265cb59ef39e9834c79003a3b7414ba9c51693335"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/GlobalUsings.cs",
+      "destination": "src/ZeroAlloc.Json/GlobalUsings.cs",
+      "sourceSha256": "c6afdfa642cc4956bd7aafb2797a122e7902a5a0c86dc808645eb101d67af3e0",
+      "destinationSha256": "8775392b2aff10b3da6da1d8a5a30322207faed9a4e7e0837da2b750498973dc"
+    },
+    {
+      "source": "src/GapSonar.TransportLab/GapSonar.TransportLab.csproj",
+      "destination": "src/ZeroAlloc.Json/ZeroAlloc.Json.csproj",
+      "sourceSha256": "0acd9f34d4aa7066701d5fac3a03367ee50e05bee3d9517bdad243fd7c14c5c0",
+      "destinationSha256": "3702bcd64b09004893c0afdb530b6b91249de567d2b8708f8ac16dab0c9dd561"
+    },
+    {
+      "source": "results/environment.json",
+      "destination": "results/environment.json",
+      "sourceSha256": "e2f96952cc47ff8d31e2c2468e509db7c73eda22783d147ed62f317a0302df72",
+      "destinationSha256": "e2f96952cc47ff8d31e2c2468e509db7c73eda22783d147ed62f317a0302df72"
+    },
+    {
+      "source": "results/source-snapshot.json",
+      "destination": "results/source-snapshot.json",
+      "sourceSha256": "6e51747762bc1cfb960cf37ccc1816b8278871b0d0d013e82803ad7b38c7d0aa",
+      "destinationSha256": "6e51747762bc1cfb960cf37ccc1816b8278871b0d0d013e82803ad7b38c7d0aa"
+    },
+    {
+      "source": "results/benchmark.log",
+      "destination": "results/benchmark.log",
+      "sourceSha256": "f7a8a18dbf2dc8daa5fe7401832f4c6d4f903591ef3e2605d7cd2be47bdc531c",
+      "destinationSha256": "f7a8a18dbf2dc8daa5fe7401832f4c6d4f903591ef3e2605d7cd2be47bdc531c"
+    },
+    {
+      "source": "results/original/environment.json",
+      "destination": "results/original/environment.json",
+      "sourceSha256": "4ce3afe11ece96ecd3d8ce9e3a77a5a3e14a919e2bf79b2c42c82c8e7a6fefce",
+      "destinationSha256": "4ce3afe11ece96ecd3d8ce9e3a77a5a3e14a919e2bf79b2c42c82c8e7a6fefce"
+    },
+    {
+      "source": "results/original/benchmark.log",
+      "destination": "results/original/benchmark.log",
+      "sourceSha256": "9480a36babcf7a53807df3da07124ac84e43db622703c509ed35c605dd955630",
+      "destinationSha256": "9480a36babcf7a53807df3da07124ac84e43db622703c509ed35c605dd955630"
+    }
+  ]
+}
