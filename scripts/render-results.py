@@ -80,26 +80,97 @@ def duration(ns):
     scale,unit=(1_000_000,'ms') if ns>=1_000_000 else (1_000,'µs') if ns>=1_000 else (1,'ns')
     return f'{ns/scale:.2f} {unit}'
 
-def render(cases,russian):
-    """Show all cases, workload-specific standard baselines and actual allocated bytes."""
-    blocks=[]
-    order=list(METHOD_SETS) if KIND=='json' else ['WebSocketRoundtripBenchmarks']
-    for typename in order:
-        group=[c for c in cases if c['Type']==typename]; means={c['Method']:c['Statistics']['Mean'] for c in group}
-        title={'PopulatorBenchmarks':('JSON population','Разбор JSON'),'PushulatorBenchmarks':('JSON writing','Запись JSON'),'RouterBenchmarks':('UTF-8 routing','Маршрутизация UTF-8'),'JsonParsingBenchmarks':('Equal-model parsing','Разбор одинаковой модели'),'JsonWritingBenchmarks':('Equal-model writing','Запись одинаковой модели'),'WebSocketRoundtripBenchmarks':('Local echo roundtrips','Локальный echo')}[typename][russian]
-        heading='| Метод | Среднее | Погрешность (99,9% ДИ) | Память B/op | Ускорение |' if russian else '| Method | Mean | Error (99.9% CI) | Allocated B/op | Speedup |'
-        blocks+=['### '+title,'',heading,'|---|---:|---:|---:|---:|']
-        for c in group:
-            method=c['Method'];stats=c['Statistics'];baseline=None
-            if typename=='PopulatorBenchmarks':baseline='Gate_Standard_Deserialize_List' if method.startswith('Gate_') else 'Standard_Deserialize_Class'
-            elif typename=='PushulatorBenchmarks':baseline='Standard_Serialize_Class' if method=='Standard_Serialize_Class' else 'Standard_Serialize_Writer'
-            elif typename=='RouterBenchmarks':baseline='Route10kMessages_JsonReader'
-            elif typename in ('JsonParsingBenchmarks','JsonWritingBenchmarks'):baseline='SystemTextJson'
-            ratio=f'{means[baseline]/stats["Mean"]:.2f}×' if baseline else '—'
-            label=method+(f' ({c["Parameters"]})' if c['Parameters'] else '')
-            blocks.append(f'| `{label}` | {duration(stats["Mean"])} | {duration(stats["ConfidenceInterval"]["Margin"])} | {c["Memory"]["BytesAllocatedPerOperation"]:g} B | {ratio} |')
-        blocks.append('')
+# Display labels describe the workload; raw reports retain exact benchmark identifiers.
+METHOD_LABELS = {
+    'Standard_Deserialize_Class': ('System.Text.Json · new object', 'System.Text.Json · новый объект'),
+    'JsonPopulator_Class_Reused_Interned': ('JsonPopulator · reused object', 'JsonPopulator · готовый объект'),
+    'JsonPopulator_Struct_Ref': ('JsonPopulator · struct (ref)', 'JsonPopulator · структура (ref)'),
+    'Gate_Standard_Deserialize_List': ('System.Text.Json · new contract list', 'System.Text.Json · новый список контрактов'),
+    'Gate_JsonPopulator_FastList_Reused_Interned': ('JsonPopulator · FastList<class>', 'JsonPopulator · FastList<class>'),
+    'Gate_JsonPopulator_FastList_Reused_Interned_Struct': ('JsonPopulator · FastList<struct>', 'JsonPopulator · FastList<struct>'),
+    'Standard_Serialize_Class': ('JsonSerializer → new byte[]', 'JsonSerializer → новый byte[]'),
+    'Standard_Serialize_Writer': ('JsonSerializer → reused writer', 'JsonSerializer → готовый writer'),
+    'JsonPushulator_Class': ('JsonPushulator · class', 'JsonPushulator · класс'),
+    'JsonPushulator_Struct': ('JsonPushulator · struct', 'JsonPushulator · структура'),
+    'Manual_Utf8JsonWriter_Direct': ('Utf8JsonWriter · manual', 'Utf8JsonWriter · ручная запись'),
+    'Route10kMessages_JsonReader': ('Utf8JsonReader', 'Utf8JsonReader'),
+    'Route10kMessages_Custom': ('Span.IndexOf', 'Span.IndexOf'),
+    'Route10kMessages_Regex': ('Regex', 'Regex'),
+    'SystemTextJson': ('System.Text.Json', 'System.Text.Json'),
+    'SystemTextJsonGenerated': ('System.Text.Json · generated', 'System.Text.Json · генерация кода'),
+    'PopulatorNewObject': ('JsonPopulator · new object', 'JsonPopulator · новый объект'),
+    'PopulatorReusedObject': ('JsonPopulator · reused object', 'JsonPopulator · готовый объект'),
+    'PopulatorReusedInterned': ('JsonPopulator · reuse + interning', 'JsonPopulator · объект + интернер'),
+    'PushulatorReusedWriter': ('JsonPushulator → reused writer', 'JsonPushulator → готовый writer'),
+}
+SUITE_TEXT = {
+    'PopulatorBenchmarks': (
+        'JSON population', 'Разбор JSON',
+        'One trade update and a list of 592 contracts. Objects, collection capacity and interned symbols are prepared before timing.',
+        'Одна сделка и список из 592 контрактов. Объекты, ёмкость коллекций и интернированные символы подготовлены до измерения.',
+        'The reused-object and FastList cases use warmed interning. The trade class includes Symbol; the struct omits it. Speedup uses a separate System.Text.Json baseline for one object and for the contract list.',
+        'Готовый объект и FastList используют прогретое интернирование. В классе сделки есть Symbol, в структуре его нет. Ускорение считается относительно своего System.Text.Json-варианта для одного объекта и для списка контрактов.'),
+    'PushulatorBenchmarks': (
+        'JSON writing', 'Запись JSON',
+        'Fresh output arrays, reusable writers and direct field-by-field writing. Class and struct models match the population workloads above.',
+        'Новый выходной массив, готовые writer-буферы и ручная запись полей. Класс и структура соответствуют моделям разбора выше.',
+        'Writer speedup is relative to JsonSerializer with a reused writer; the fresh-array row uses itself as baseline. Caller-owned buffers keep all reused-writer variants at 0 B/op.',
+        'Ускорение writer-вариантов считается относительно JsonSerializer с готовым writer; строка нового массива сравнивается с собой. Повторное использование выходной памяти даёт 0 B/op во всех writer-вариантах.'),
+    'RouterBenchmarks': (
+        'Symbol routing from UTF-8', 'Маршрутизация символов из UTF-8',
+        'Look up the symbol in each compact message without building an object tree. The workload covers 5,000 symbols; values below are per message.',
+        'Поиск символа в компактном сообщении без построения дерева объектов. В нагрузке 5000 символов; время и память ниже указаны на одно сообщение.',
+        'Span.IndexOf searches the compact ASCII symbol field. The accepted message shape and multi-segment behavior are described in the architecture notes.',
+        'Span.IndexOf ищет компактное ASCII-поле symbol. Допустимый формат сообщения и обработка нескольких сегментов описаны в архитектуре.'),
+    'JsonParsingBenchmarks': (
+        'Same-model parsing', 'Разбор одинаковой модели',
+        'All variants read the same seven-field trade, including Symbol. These rows separate object reuse from string interning.',
+        'Все варианты читают одну модель сделки из семи полей, включая Symbol. Здесь отдельно виден эффект переиспользования объекта и интернирования строк.',
+        'Reusing only the object still allocates its Symbol string. Reusing the object and an already interned symbol reaches 0 B/op.',
+        'При повторном использовании одного объекта строка Symbol всё ещё создаётся заново. Готовый объект и уже известный интернеру символ дают 0 B/op.'),
+    'JsonWritingBenchmarks': (
+        'Same-model writing', 'Запись одинаковой модели',
+        'The same trade, output buffer and writer lifetime, including the source-generated System.Text.Json baseline.',
+        'Одна модель сделки и одинаковый жизненный цикл writer и выходного буфера, включая System.Text.Json с генерацией кода.',
+        'The source-generated framework writer is fastest here; all three variants allocate 0 B/op. Population of existing objects and reusable collections is covered separately above.',
+        'В этом сценарии стандартный writer с генерацией кода быстрее; все три варианта дают 0 B/op. Заполнение готовых объектов и коллекций показано отдельно выше.'),
+}
+
+def render(cases, russian):
+    """Render every measured case with workload labels and unchanged numeric baselines."""
+    lookup = {(case['Type'], case['Method']): case for case in cases}
+    routing = lookup['RouterBenchmarks', 'Route10kMessages_JsonReader']['Statistics']['Mean'] / lookup['RouterBenchmarks', 'Route10kMessages_Custom']['Statistics']['Mean']
+    parser_bytes = lookup['PopulatorBenchmarks', 'JsonPopulator_Class_Reused_Interned']['Memory']['BytesAllocatedPerOperation']
+    writer_bytes = lookup['PushulatorBenchmarks', 'JsonPushulator_Class']['Memory']['BytesAllocatedPerOperation']
+    highlight = (f'**Объект + интернирование: {parser_bytes:g} B/op · Готовый writer: {writer_bytes:g} B/op · Маршрутизация: {routing:.2f}×.**' if russian else
+                 f'**Reuse + interning: {parser_bytes:g} B/op · Reused writer: {writer_bytes:g} B/op · Routing: {routing:.2f}×.**')
+    blocks = [highlight, '']
+    for typename in METHOD_SETS:
+        group = [case for case in cases if case['Type'] == typename]
+        means = {case['Method']: case['Statistics']['Mean'] for case in group}
+        text = SUITE_TEXT[typename]
+        heading = '| Вариант | Время | Погрешность | Аллокации | Ускорение |' if russian else '| Method | Mean | Error | Allocated | Speedup |'
+        blocks.extend(['### ' + text[int(russian)], '', text[2 + int(russian)], '', heading, '|---|---:|---:|---:|---:|'])
+        for case in group:
+            method = case['Method']
+            if typename == 'PopulatorBenchmarks':
+                baseline = 'Gate_Standard_Deserialize_List' if method.startswith('Gate_') else 'Standard_Deserialize_Class'
+            elif typename == 'PushulatorBenchmarks':
+                baseline = 'Standard_Serialize_Class' if method == 'Standard_Serialize_Class' else 'Standard_Serialize_Writer'
+            elif typename == 'RouterBenchmarks':
+                baseline = 'Route10kMessages_JsonReader'
+            else:
+                baseline = 'SystemTextJson'
+            stats = case['Statistics']
+            label = METHOD_LABELS[method][int(russian)]
+            allocated = case['Memory']['BytesAllocatedPerOperation']
+            blocks.append(f'| `{label}` | {duration(stats["Mean"])} | {duration(stats["ConfidenceInterval"]["Margin"])} | {allocated:g} B | {means[baseline] / stats["Mean"]:.2f}× |')
+        blocks.extend(['', text[4 + int(russian)], ''])
     return '\n'.join(blocks)
+
+def render_local(cases, streams, russian):
+    """Keep the README numeric region reproducible from the JSON reports."""
+    return render(cases, russian)
 
 def main():
     """Regenerate both languages and retain comparison statistics in machine-readable form."""
@@ -115,10 +186,12 @@ def main():
     (directory/'summary.json').write_text(json.dumps(summary,indent=2)+'\n', encoding='utf-8')
     for filename,russian in [('README.md',False),('README.ru.md',True)]:
         p=ROOT/filename;s=p.read_text(encoding='utf-8');start='<!-- LOCAL_RESULTS_START -->';end='<!-- LOCAL_RESULTS_END -->';head,rest=s.split(start);_,tail=rest.split(end)
-        table=render(cases,russian)
+        table=render_local(cases,summary.get('streaming'),russian)
+        rendered=head+start+'\n'+table+'\n'+end+tail
         if KIND=='websocket':
-            table+=('\n| Клиент | Сообщений/с | CPU мс / 1 млн | Память kB / 1 млн |\n' if russian else '\n| Client | Messages/s | CPU ms / 1M | Allocated kB / 1M |\n')+'|---|---:|---:|---:|\n'
-            for client,stats in summary['streaming'].items():table+=f'| {client} | {stats["messagesPerSecond"]:,.0f} | {stats["cpuMsPerMillionMessages"]:,.0f} | {stats["allocatedBytesPerMillionMessages"]/1_000:.3f} |\n'
-        p.write_text(head+start+'\n'+table+'\n'+end+tail, encoding='utf-8')
+            eth_start='<!-- ETHERNET_RESULTS_START -->';eth_end='<!-- ETHERNET_RESULTS_END -->'
+            before_eth,eth_rest=rendered.split(eth_start);_,after_eth=eth_rest.split(eth_end)
+            rendered=before_eth+eth_start+'\n'+render_ethernet(russian)+'\n'+eth_end+after_eth
+        p.write_text(rendered, encoding='utf-8')
     print(f'Validated {len(cases)} measured cases'+(' and before/after comparison' if before else '')+(' plus streaming' if KIND=='websocket' else '')+'; generated both READMEs.')
 if __name__=='__main__':main()
