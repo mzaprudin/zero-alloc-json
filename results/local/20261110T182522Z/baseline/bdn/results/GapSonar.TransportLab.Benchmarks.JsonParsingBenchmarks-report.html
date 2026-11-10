@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>GapSonar.TransportLab.Benchmarks.JsonParsingBenchmarks-20261110-181316</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.3 LTS (Noble Numbat)
+AMD Ryzen 9 5950X 0.55GHz, 1 CPU, 32 logical and 16 physical cores
+.NET SDK 10.0.114
+  [Host]     : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+  Job-KOVDBU : .NET 10.0.14 (10.0.14, 10.0.1426.52326), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>IterationCount=15  IterationTime=500ms  LaunchCount=1  
+WarmupCount=5  
+</code></pre>
+
+<table>
+<thead><tr><th>Method           </th><th>Mean</th><th>Error</th><th>StdDev</th><th>Ratio</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>SystemTextJson</td><td>521.6 ns</td><td>5.93 ns</td><td>5.55 ns</td><td>1.00</td><td>0.0064</td><td>120 B</td><td>1.00</td>
+</tr><tr><td>SystemTextJsonGenerated</td><td>497.1 ns</td><td>5.74 ns</td><td>5.37 ns</td><td>0.95</td><td>0.0069</td><td>120 B</td><td>1.00</td>
+</tr><tr><td>PopulatorNewObject</td><td>475.3 ns</td><td>5.55 ns</td><td>5.20 ns</td><td>0.91</td><td>0.0068</td><td>120 B</td><td>1.00</td>
+</tr><tr><td>PopulatorReusedObject</td><td>422.3 ns</td><td>2.72 ns</td><td>2.41 ns</td><td>0.81</td><td>0.0017</td><td>40 B</td><td>0.33</td>
+</tr><tr><td>PopulatorReusedInterned</td><td>440.1 ns</td><td>4.70 ns</td><td>4.39 ns</td><td>0.84</td><td>-</td><td>-</td><td>0.00</td>
+</tr></tbody></table>
+</body>
+</html>

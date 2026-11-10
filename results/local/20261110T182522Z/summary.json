@@ -1,0 +1,203 @@
+{
+  "caseCount": 22,
+  "comparison": [
+    {
+      "name": "GapSonar.TransportLab.Benchmarks.JsonParsingBenchmarks.SystemTextJson",
+      "parameters": "",
+      "beforeMeanNs": 521.595130399348,
+      "afterMeanNs": 521.364810807951,
+      "afterToBefore": 0.9995584322437584,
+      "beforeAllocatedBytes": 120,
+      "afterAllocatedBytes": 120
+    },
+    {
+      "name": "GapSonar.TransportLab.Benchmarks.JsonParsingBenchmarks.SystemTextJsonGenerated",
+      "parameters": "",
+      "beforeMeanNs": 497.13596435959636,
+      "afterMeanNs": 563.2931680397595,
+      "afterToBefore": 1.133076680069578,
+      "beforeAllocatedBytes": 120,
+      "afterAllocatedBytes": 120
+    },
+    {
+      "name": "GapSonar.TransportLab.Benchmarks.JsonParsingBenchmarks.PopulatorNewObject",
+      "parameters": "",
+      "beforeMeanNs": 475.27573885318867,
+      "afterMeanNs": 493.51948816856003,
+      "afterToBefore": 1.038385610339363,
+      "beforeAllocatedBytes": 120,
+      "afterAllocatedBytes": 120
+    },
+    {
+      "name": "GapSonar.TransportLab.Benchmarks.JsonParsingBenchmarks.PopulatorReusedObject",
+      "parameters": "",
+      "beforeMeanNs": 422.30761403587076,
+      "afterMeanNs": 432.7386201536422,
+      "afterToBefore": 1.0247000190645046,
+      "beforeAllocatedBytes": 40,
+      "afterAllocatedBytes": 40
+    },
+    {
+      "name": "GapSonar.TransportLab.Benchmarks.JsonParsingBenchmarks.PopulatorReusedInterned",
+      "parameters": "",
+      "beforeMeanNs": 440.07865108479314,
+      "afterMeanNs": 430.4669276227334,
+      "afterToBefore": 0.978159078068507,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "GapSonar.TransportLab.Benchmarks.JsonWritingBenchmarks.SystemTextJson",
+      "parameters": "",
+      "beforeMeanNs": 339.20610532566,
+      "afterMeanNs": 356.99588235836916,
+      "afterToBefore": 1.0524453326558783,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "GapSonar.TransportLab.Benchmarks.JsonWritingBenchmarks.SystemTextJsonGenerated",
+      "parameters": "",
+      "beforeMeanNs": 279.543095407567,
+      "afterMeanNs": 268.14063240997217,
+      "afterToBefore": 0.9592103572403735,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "GapSonar.TransportLab.Benchmarks.JsonWritingBenchmarks.PushulatorReusedWriter",
+      "parameters": "",
+      "beforeMeanNs": 298.0297589064712,
+      "afterMeanNs": 308.00174231034816,
+      "afterToBefore": 1.0334596902016298,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PopulatorBenchmarks.Standard_Deserialize_Class",
+      "parameters": "",
+      "beforeMeanNs": 587.9367545889838,
+      "afterMeanNs": 574.1986340254737,
+      "afterToBefore": 0.9766333360582053,
+      "beforeAllocatedBytes": 120,
+      "afterAllocatedBytes": 120
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PopulatorBenchmarks.JsonPopulator_Class_Reused_Interned",
+      "parameters": "",
+      "beforeMeanNs": 552.2105484328948,
+      "afterMeanNs": 537.889372161194,
+      "afterToBefore": 0.9740657321517263,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PopulatorBenchmarks.JsonPopulator_Struct_Ref",
+      "parameters": "",
+      "beforeMeanNs": 456.5932490728679,
+      "afterMeanNs": 471.6227391586502,
+      "afterToBefore": 1.0329165841069712,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PopulatorBenchmarks.Gate_Standard_Deserialize_List",
+      "parameters": "",
+      "beforeMeanNs": 1803583.2313988097,
+      "afterMeanNs": 1798371.547371032,
+      "afterToBefore": 0.9971103723204746,
+      "beforeAllocatedBytes": 141408,
+      "afterAllocatedBytes": 141408
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PopulatorBenchmarks.Gate_JsonPopulator_FastList_Reused_Interned",
+      "parameters": "",
+      "beforeMeanNs": 1517890.5162698412,
+      "afterMeanNs": 1525405.463888889,
+      "afterToBefore": 1.004950915457009,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PopulatorBenchmarks.Gate_JsonPopulator_FastList_Reused_Interned_Struct",
+      "parameters": "",
+      "beforeMeanNs": 1482517.937215909,
+      "afterMeanNs": 1459003.2545454544,
+      "afterToBefore": 0.9841386858936669,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PushulatorBenchmarks.Standard_Serialize_Class",
+      "parameters": "",
+      "beforeMeanNs": 401.4427900029856,
+      "afterMeanNs": 392.77322698755864,
+      "afterToBefore": 0.9784039887343289,
+      "beforeAllocatedBytes": 192,
+      "afterAllocatedBytes": 192
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PushulatorBenchmarks.Standard_Serialize_Writer",
+      "parameters": "",
+      "beforeMeanNs": 340.35013764311236,
+      "afterMeanNs": 364.9947316512515,
+      "afterToBefore": 1.0724095314866047,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PushulatorBenchmarks.JsonPushulator_Class",
+      "parameters": "",
+      "beforeMeanNs": 296.8691998218059,
+      "afterMeanNs": 295.34568019440263,
+      "afterToBefore": 0.9948680441476658,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PushulatorBenchmarks.JsonPushulator_Struct",
+      "parameters": "",
+      "beforeMeanNs": 266.29289368133675,
+      "afterMeanNs": 273.2695576470009,
+      "afterToBefore": 1.0261992119624974,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "JsonPopulatorBenchmark.PushulatorBenchmarks.Manual_Utf8JsonWriter_Direct",
+      "parameters": "",
+      "beforeMeanNs": 301.359399300599,
+      "afterMeanNs": 302.8662103535523,
+      "afterToBefore": 1.0050000466434772,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "RouterBenchmark.RouterBenchmarks.Route10kMessages_JsonReader",
+      "parameters": "",
+      "beforeMeanNs": 81.53850766025643,
+      "afterMeanNs": 81.52642674067982,
+      "afterToBefore": 0.9998518378625846,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "RouterBenchmark.RouterBenchmarks.Route10kMessages_Custom",
+      "parameters": "",
+      "beforeMeanNs": 52.292197326388894,
+      "afterMeanNs": 47.887851146449705,
+      "afterToBefore": 0.9157743142356619,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    },
+    {
+      "name": "RouterBenchmark.RouterBenchmarks.Route10kMessages_Regex",
+      "parameters": "",
+      "beforeMeanNs": 90.44155732843139,
+      "afterMeanNs": 93.77243006993007,
+      "afterToBefore": 1.0368290069287824,
+      "beforeAllocatedBytes": 0,
+      "afterAllocatedBytes": 0
+    }
+  ]
+}

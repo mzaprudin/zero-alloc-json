@@ -1,0 +1,5 @@
+  Determining projects to restore...
+  Restored /home/m/projects/zero-alloc-json/src/ZeroAlloc.Json/ZeroAlloc.Json.csproj (in 119 ms).
+  Restored /home/m/projects/zero-alloc-json/samples/ZeroAlloc.Json.Demo/ZeroAlloc.Json.Demo.csproj (in 128 ms).
+  Restored /home/m/projects/zero-alloc-json/tests/ZeroAlloc.Json.Tests/ZeroAlloc.Json.Tests.csproj (in 210 ms).
+  Restored /home/m/projects/zero-alloc-json/benchmarks/ZeroAlloc.Json.Benchmarks/ZeroAlloc.Json.Benchmarks.csproj (in 233 ms).

@@ -6,7 +6,8 @@
     "Build/package boundaries, global imports and friend assemblies",
     "PoolRental<T> is internal in each assembly",
     "JSON routing implementations moved verbatim from benchmark file to library; namespaces preserved",
-    "Harness paths and standalone samples/scripts"
+    "Harness paths and standalone samples/scripts",
+    "Text tooling explicitly uses UTF-8 on Linux and Windows; preserved test assembly name supports unchanged process tests"
   ],
   "files": [
     {
@@ -19,7 +20,7 @@
       "source": ".gitattributes",
       "destination": ".gitattributes",
       "sourceSha256": "a177afd6d9fae872964ab8bf53e4f455b9add510f91ad8a7b609022f8b368e8f",
-      "destinationSha256": "a177afd6d9fae872964ab8bf53e4f455b9add510f91ad8a7b609022f8b368e8f"
+      "destinationSha256": "066d3493dcd6a611cc71f7d226896041e2af1eda0e2a4ebf751560b4ad6bed85"
     },
     {
       "source": ".gitignore",

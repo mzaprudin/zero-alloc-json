@@ -1,0 +1,10 @@
+  ZeroAlloc.Json -> /home/m/projects/zero-alloc-json/src/ZeroAlloc.Json/bin/Release/net10.0/ZeroAlloc.Json.dll
+  ZeroAlloc.Json.Tests -> /home/m/projects/zero-alloc-json/tests/ZeroAlloc.Json.Tests/bin/Release/net10.0/GapSonar.TransportLab.Tests.dll
+  ZeroAlloc.Json.Demo -> /home/m/projects/zero-alloc-json/samples/ZeroAlloc.Json.Demo/bin/Release/net10.0/ZeroAlloc.Json.Demo.dll
+  ZeroAlloc.Json.Benchmarks -> /home/m/projects/zero-alloc-json/benchmarks/ZeroAlloc.Json.Benchmarks/bin/Release/net10.0/ZeroAlloc.Json.Benchmarks.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:03.80
