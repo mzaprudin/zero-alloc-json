@@ -116,7 +116,7 @@
       "source": "fixtures/README.md",
       "destination": "fixtures/README.md",
       "sourceSha256": "3b032e2c299559e4e5a7f6817f857f64d85ac07564328342a7c6e523ffeb9a2d",
-      "destinationSha256": "3b032e2c299559e4e5a7f6817f857f64d85ac07564328342a7c6e523ffeb9a2d"
+      "destinationSha256": "ef9f645f6ae058e78fe3915b0e3b960b2d88f8965050b2121b6f5c5cfe53cd4b"
     },
     {
       "source": "fixtures/gate.futures.contracts.all.json",
