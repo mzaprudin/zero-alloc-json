@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="270" viewBox="0 0 1200 270" role="img" aria-labelledby="title desc">
+  <title id="title">zero-alloc-json — JSON for low-latency systems</title>
+  <desc id="desc">JSON processing for continuous data streams in C# / .NET 10.</desc>
+  <rect width="1200" height="270" rx="12" fill="#15231f"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+    <text x="56" y="48" fill="#acbfb5" font-family="ui-monospace, 'SFMono-Regular', Consolas, monospace" font-size="22" letter-spacing="1">C# / .NET 10</text>
+    <text x="50" y="140" fill="#f4f5ed" font-size="84" font-weight="700" letter-spacing="-3">zero-alloc-json<tspan fill="#a6efc3">.</tspan></text>
+    <text x="56" y="212" fill="#a6efc3" font-size="40">JSON for low-latency systems</text>
+  </g>
+</svg>

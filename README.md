@@ -1,29 +1,12 @@
-# zero-alloc-json
+<p align="center"><strong>English</strong> · <a href="README.ru.md">Русский</a> · <a href="https://github.com/mzaprudin/zero-alloc-json/actions/workflows/ci.yml">CI</a></p>
 
-[English](README.md) · [Русский](README.ru.md) · [CI](https://github.com/mzaprudin/zero-alloc-json/actions/workflows/ci.yml)
+<h1><img src="assets/readme/hero-en.svg" width="100%" alt="zero-alloc-json — JSON for low-latency systems"></h1>
 
-JSON processing for continuous streams of small market-data updates in C# / .NET 10. Each update fills an existing object or collection; serialization writes into a buffer kept between messages. This keeps repeated object creation and its GC cost out of the warmed processing path.
+C# / .NET 10 components for low-latency JSON stream processing. Optimized parsing reduces processing time, while reused objects and buffers reduce garbage-collection pressure. This helps keep latency predictable and the system stable under continuous data load.
 
-Developed for GapSonar's trade and contract-data workloads. The components cover object population, JSON writing and symbol routing directly from UTF-8.
+**0 B/op in the warmed reuse scenarios.** Metadata, capacity and interned symbols are prepared before measurement; initialization, growth and new strings allocate.
 
-## Engineering decisions
-
-- **Reuse destinations.** `JsonPopulator` updates prepared classes, structs and `FastList<T>` slots. Partial updates retain fields absent from the message.
-- **Prepare access once.** Member lookup and compiled writers are cached per type. The caller reuses `Utf8JsonWriter` and its output buffer.
-- **Reuse known strings.** Optional interning shares recurring symbols; fixed-size strings provide another way to avoid managed string allocation.
-- **Route the incoming bytes.** The compact-message router finds the symbol in UTF-8 and resolves it without building an object tree.
-
-The destination is created once. Here, `intern` is a cached interning delegate and `writer` is a reusable `Utf8JsonWriter`:
-
-```csharp
-var trade = new Trade();
-JsonPopulator.Populate(firstUpdate, trade, intern);
-JsonPopulator.Populate(nextUpdate, trade, intern); // Update the same object.
-JsonPushulator.Push(trade, writer);
-writer.Flush();
-```
-
-[Complete parsing and writing example](samples/ZeroAlloc.Json.Demo/Program.cs). Steady-state 0 B/op requires warmed metadata, enough collection capacity and already interned symbols. Initialization, growth and new strings have their own allocation costs; [ownership and parser behavior](docs/architecture.md) describe those boundaries.
+[Benchmarks](#json-and-routing-benchmarks) · [Reuse example](#reuse-in-practice) · [Build and run](#build-and-run-the-example)
 
 ## JSON and routing benchmarks
 
@@ -105,6 +88,27 @@ Allocated memory is managed bytes per operation; routing is normalized per messa
 
 [Raw reports and samples](results/local/20261110T182522Z/bdn/results/) · [Workloads and reproduction](docs/benchmark-methodology.md)
 
+## Reuse in practice
+
+The destination is created once. Here, `intern` is a cached interning delegate and `writer` is a reusable `Utf8JsonWriter`:
+
+```csharp
+var trade = new Trade();
+JsonPopulator.Populate(firstUpdate, trade, intern);
+JsonPopulator.Populate(nextUpdate, trade, intern); // Update the same object.
+JsonPushulator.Push(trade, writer);
+writer.Flush();
+```
+
+[Complete parsing and writing example](samples/ZeroAlloc.Json.Demo/Program.cs) · [Ownership and parser behavior](docs/architecture.md)
+
+### Engineering decisions
+
+- **Reuse destinations.** `JsonPopulator` updates prepared classes, structs and `FastList<T>` slots. Partial updates retain fields absent from the message.
+- **Prepare access once.** Member lookup and compiled writers are cached per type. The caller reuses `Utf8JsonWriter` and its output buffer.
+- **Reuse known strings.** Optional interning shares recurring symbols; fixed-size strings provide another way to avoid managed string allocation.
+- **Route the incoming bytes.** The compact-message router finds the symbol in UTF-8 and resolves it without building an object tree.
+
 ## Build and run the example
 
 Requires the .NET 10 SDK:
@@ -117,6 +121,8 @@ dotnet run -c Release --no-build --project samples/ZeroAlloc.Json.Demo
 ```
 
 The example checks parsed fields and serialized bytes against System.Text.Json. Tests exercise reusable destinations, escaped and segmented input, numeric strings, GUIDs and writer output. Linux and Windows CI run the tests, example and every benchmark setup.
+
+## Documentation
 
 [Architecture and memory ownership](docs/architecture.md) · [Development](docs/development.md) · [Verification](docs/verification.md) · [Source and measurement provenance](docs/provenance.md)
 

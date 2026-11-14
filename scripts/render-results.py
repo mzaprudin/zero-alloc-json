@@ -105,7 +105,7 @@ METHOD_LABELS = {
 }
 SUITE_TEXT = {
     'PopulatorBenchmarks': (
-        'JSON population', 'Разбор JSON',
+        'JSON population', 'Парсинг JSON',
         'One trade update and a list of 592 contracts. Objects, collection capacity and interned symbols are prepared before timing.',
         'Одна сделка и список из 592 контрактов. Объекты, ёмкость коллекций и интернированные символы подготовлены до измерения.',
         'The reused-object and FastList cases use warmed interning. The trade class includes Symbol; the struct omits it. Speedup uses a separate System.Text.Json baseline for one object and for the contract list.',
