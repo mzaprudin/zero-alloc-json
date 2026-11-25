@@ -1,6 +1,7 @@
 using System.Buffers;
 using System.Buffers.Text;
 using System.Collections;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -633,88 +634,42 @@ internal static class ParserHelpers
     private const long MaxUnixTimeMilliseconds = 253_402_300_799_999L;
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static double ParseDouble(ref Utf8JsonReader reader, StringInternerDelegate? _)
+    private static T ParseNumber<T>(ref Utf8JsonReader reader) where T : struct, IUtf8SpanParsable<T>
     {
-        if (reader.TokenType == JsonTokenType.Number) return reader.GetDouble();
-        if (reader.TokenType == JsonTokenType.String)
+        if (reader.TokenType == JsonTokenType.Number || reader.TokenType == JsonTokenType.String)
         {
             if (!reader.HasValueSequence)
             {
-                Utf8Parser.TryParse(reader.ValueSpan, out double val, out int _);
-                return val;
+                if (T.TryParse(reader.ValueSpan, CultureInfo.InvariantCulture, out T val))
+                    return val;
+                return default;
             }
 
             int len = (int)reader.ValueSequence.Length;
             Span<byte> buffer = len <= 128 ? stackalloc byte[len] : new byte[len];
             reader.ValueSequence.CopyTo(buffer);
-            Utf8Parser.TryParse(buffer, out double valSeq, out int _);
-            return valSeq;
+            if (T.TryParse(buffer, CultureInfo.InvariantCulture, out T valSeq))
+                return valSeq;
+            return default;
         }
-        return 0;
+        return default;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static decimal ParseDecimal(ref Utf8JsonReader reader, StringInternerDelegate? _)
-    {
-        if (reader.TokenType == JsonTokenType.Number) return reader.GetDecimal();
-        if (reader.TokenType == JsonTokenType.String)
-        {
-            if (!reader.HasValueSequence)
-            {
-                Utf8Parser.TryParse(reader.ValueSpan, out decimal val, out int _);
-                return val;
-            }
-
-            int len = (int)reader.ValueSequence.Length;
-            Span<byte> buffer = len <= 128 ? stackalloc byte[len] : new byte[len];
-            reader.ValueSequence.CopyTo(buffer);
-            Utf8Parser.TryParse(buffer, out decimal valSeq, out int _);
-            return valSeq;
-        }
-        return 0;
-    }
+    public static double ParseDouble(ref Utf8JsonReader reader, StringInternerDelegate? _) =>
+        ParseNumber<double>(ref reader);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static long ParseLong(ref Utf8JsonReader reader, StringInternerDelegate? _)
-    {
-        if (reader.TokenType == JsonTokenType.Number) return reader.GetInt64();
-        if (reader.TokenType == JsonTokenType.String)
-        {
-            if (!reader.HasValueSequence)
-            {
-                Utf8Parser.TryParse(reader.ValueSpan, out long val, out int _);
-                return val;
-            }
-
-            int len = (int)reader.ValueSequence.Length;
-            Span<byte> buffer = len <= 128 ? stackalloc byte[len] : new byte[len];
-            reader.ValueSequence.CopyTo(buffer);
-            Utf8Parser.TryParse(buffer, out long valSeq, out int _);
-            return valSeq;
-        }
-        return 0;
-    }
+    public static decimal ParseDecimal(ref Utf8JsonReader reader, StringInternerDelegate? _) =>
+        ParseNumber<decimal>(ref reader);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static int ParseInt(ref Utf8JsonReader reader, StringInternerDelegate? _)
-    {
-        if (reader.TokenType == JsonTokenType.Number) return reader.GetInt32();
-        if (reader.TokenType == JsonTokenType.String)
-        {
-            if (!reader.HasValueSequence)
-            {
-                Utf8Parser.TryParse(reader.ValueSpan, out int val, out int _);
-                return val;
-            }
+    public static long ParseLong(ref Utf8JsonReader reader, StringInternerDelegate? _) =>
+        ParseNumber<long>(ref reader);
 
-            int len = (int)reader.ValueSequence.Length;
-            Span<byte> buffer = len <= 128 ? stackalloc byte[len] : new byte[len];
-            reader.ValueSequence.CopyTo(buffer);
-            Utf8Parser.TryParse(buffer, out int valSeq, out int _);
-            return valSeq;
-        }
-        return 0;
-    }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static int ParseInt(ref Utf8JsonReader reader, StringInternerDelegate? _) =>
+        ParseNumber<int>(ref reader);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static bool ParseBool(ref Utf8JsonReader reader, StringInternerDelegate? _)
