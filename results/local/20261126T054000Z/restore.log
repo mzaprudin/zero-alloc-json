@@ -1,0 +1,5 @@
+  Determining projects to restore...
+  Restored /home/m/projects/tech-writing/demos/zero-alloc-json/src/ZeroAlloc.Json/ZeroAlloc.Json.csproj (in 105 ms).
+  Restored /home/m/projects/tech-writing/demos/zero-alloc-json/samples/ZeroAlloc.Json.Demo/ZeroAlloc.Json.Demo.csproj (in 111 ms).
+  Restored /home/m/projects/tech-writing/demos/zero-alloc-json/tests/ZeroAlloc.Json.Tests/ZeroAlloc.Json.Tests.csproj (in 208 ms).
+  Restored /home/m/projects/tech-writing/demos/zero-alloc-json/benchmarks/ZeroAlloc.Json.Benchmarks/ZeroAlloc.Json.Benchmarks.csproj (in 211 ms).

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>JsonPopulatorBenchmark.PopulatorBenchmarks-20261126-054329</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; text-align: right; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet v0.15.8, Linux Ubuntu 24.04.3 LTS (Noble Numbat)
+AMD Ryzen 9 5950X 0.55GHz, 1 CPU, 32 logical and 16 physical cores
+.NET SDK 10.0.115
+  [Host]     : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v3
+  Job-KOVDBU : .NET 10.0.15 (10.0.15, 10.0.1526.53008), X64 RyuJIT x86-64-v3
+</code></pre>
+<pre><code>IterationCount=15  IterationTime=500ms  LaunchCount=1  
+WarmupCount=5  
+</code></pre>
+
+<table>
+<thead><tr><th>Method                                      </th><th>Mean    </th><th>Error </th><th>StdDev</th><th>Ratio</th><th>RatioSD</th><th>Gen0</th><th>Allocated</th><th>Alloc Ratio</th>
+</tr>
+</thead><tbody><tr><td>Standard_Deserialize_Class</td><td>577.2 ns</td><td>5.51 ns</td><td>4.88 ns</td><td>1.00</td><td>0.01</td><td>0.0070</td><td>120 B</td><td>1.00</td>
+</tr><tr><td>JsonPopulator_Class_Reused_Interned</td><td>539.0 ns</td><td>3.12 ns</td><td>2.77 ns</td><td>0.93</td><td>0.01</td><td>-</td><td>-</td><td>0.00</td>
+</tr><tr><td>JsonPopulator_Struct_Ref</td><td>458.8 ns</td><td>5.16 ns</td><td>4.57 ns</td><td>0.79</td><td>0.01</td><td>-</td><td>-</td><td>0.00</td>
+</tr><tr><td>Gate_Standard_Deserialize_List</td><td>1,797,177.3 ns</td><td>10,871.71 ns</td><td>10,169.41 ns</td><td>3,113.74</td><td>30.68</td><td>6.9444</td><td>141408 B</td><td>1,178.40</td>
+</tr><tr><td>Gate_JsonPopulator_FastList_Reused_Interned</td><td>1,510,224.0 ns</td><td>9,467.68 ns</td><td>8,392.85 ns</td><td>2,616.57</td><td>25.62</td><td>-</td><td>-</td><td>0.00</td>
+</tr><tr><td>Gate_JsonPopulator_FastList_Reused_Interned_Struct</td><td>1,450,685.0 ns</td><td>13,696.18 ns</td><td>12,141.31 ns</td><td>2,513.41</td><td>28.92</td><td>-</td><td>-</td><td>0.00</td>
+</tr></tbody></table>
+</body>
+</html>

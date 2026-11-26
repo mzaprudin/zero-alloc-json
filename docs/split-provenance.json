@@ -320,7 +320,7 @@
       "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/JsonPopulator.cs",
       "destination": "src/ZeroAlloc.Json/Infrastructure/Serialization/JsonPopulator.cs",
       "sourceSha256": "cdfccc14623363069c6f5d752e735ea2d4317d478206f2756f0d0a207be4733f",
-      "destinationSha256": "cdfccc14623363069c6f5d752e735ea2d4317d478206f2756f0d0a207be4733f"
+      "destinationSha256": "628938bd147a75a7707e0612ce125dbba9588762eb7cae9d81022fd5a37f3a07"
     },
     {
       "source": "src/GapSonar.TransportLab/Infrastructure/Serialization/JsonPositionAttribute.cs",

@@ -21,12 +21,12 @@ One trade update and a list of 592 contracts. Objects, collection capacity and i
 
 | Method | Mean | Error | Allocated | Speedup |
 |---|---:|---:|---:|---:|
-| `System.Text.Json · new object` | 574.20 ns | 5.23 ns | 120 B | 1.00× |
-| `JsonPopulator · reused object` | 537.89 ns | 4.90 ns | 0 B | 1.07× |
-| `JsonPopulator · struct (ref)` | 471.62 ns | 4.62 ns | 0 B | 1.22× |
-| `System.Text.Json · new contract list` | 1.80 ms | 16.76 µs | 141408 B | 1.00× |
-| `JsonPopulator · FastList<class>` | 1.53 ms | 12.48 µs | 0 B | 1.18× |
-| `JsonPopulator · FastList<struct>` | 1.46 ms | 9.89 µs | 0 B | 1.23× |
+| `System.Text.Json · new object` | 577.22 ns | 5.51 ns | 120 B | 1.00× |
+| `JsonPopulator · reused object` | 538.96 ns | 3.12 ns | 0 B | 1.07× |
+| `JsonPopulator · struct (ref)` | 458.84 ns | 5.16 ns | 0 B | 1.26× |
+| `System.Text.Json · new contract list` | 1.80 ms | 10.87 µs | 141408 B | 1.00× |
+| `JsonPopulator · FastList<class>` | 1.51 ms | 9.47 µs | 0 B | 1.19× |
+| `JsonPopulator · FastList<struct>` | 1.45 ms | 13.70 µs | 0 B | 1.24× |
 
 The reused-object and FastList cases use warmed interning. The trade class includes Symbol; the struct omits it. Speedup uses a separate System.Text.Json baseline for one object and for the contract list.
 
@@ -36,11 +36,11 @@ Fresh output arrays, reusable writers and direct field-by-field writing. Class a
 
 | Method | Mean | Error | Allocated | Speedup |
 |---|---:|---:|---:|---:|
-| `JsonSerializer → new byte[]` | 392.77 ns | 2.37 ns | 192 B | 1.00× |
-| `JsonSerializer → reused writer` | 364.99 ns | 2.31 ns | 0 B | 1.00× |
-| `JsonPushulator · class` | 295.35 ns | 1.30 ns | 0 B | 1.24× |
-| `JsonPushulator · struct` | 273.27 ns | 1.77 ns | 0 B | 1.34× |
-| `Utf8JsonWriter · manual` | 302.87 ns | 1.50 ns | 0 B | 1.21× |
+| `JsonSerializer → new byte[]` | 406.66 ns | 2.70 ns | 192 B | 1.00× |
+| `JsonSerializer → reused writer` | 342.32 ns | 2.14 ns | 0 B | 1.00× |
+| `JsonPushulator · class` | 306.83 ns | 2.78 ns | 0 B | 1.12× |
+| `JsonPushulator · struct` | 262.68 ns | 1.51 ns | 0 B | 1.30× |
+| `Utf8JsonWriter · manual` | 303.05 ns | 2.23 ns | 0 B | 1.13× |
 
 Writer speedup is relative to JsonSerializer with a reused writer; the fresh-array row uses itself as baseline. Caller-owned buffers keep all reused-writer variants at 0 B/op.
 
@@ -50,9 +50,9 @@ Look up the symbol in each compact message without building an object tree. The 
 
 | Method | Mean | Error | Allocated | Speedup |
 |---|---:|---:|---:|---:|
-| `Utf8JsonReader` | 81.53 ns | 0.43 ns | 0 B | 1.00× |
-| `Span.IndexOf` | 47.89 ns | 0.26 ns | 0 B | 1.70× |
-| `Regex` | 93.77 ns | 0.66 ns | 0 B | 0.87× |
+| `Utf8JsonReader` | 82.00 ns | 0.14 ns | 0 B | 1.00× |
+| `Span.IndexOf` | 48.24 ns | 0.24 ns | 0 B | 1.70× |
+| `Regex` | 111.60 ns | 0.33 ns | 0 B | 0.73× |
 
 Span.IndexOf searches the compact ASCII symbol field. The accepted message shape and multi-segment behavior are described in the architecture notes.
 
@@ -62,11 +62,11 @@ All variants read the same seven-field trade, including Symbol. These rows separ
 
 | Method | Mean | Error | Allocated | Speedup |
 |---|---:|---:|---:|---:|
-| `System.Text.Json` | 521.36 ns | 7.42 ns | 120 B | 1.00× |
-| `System.Text.Json · generated` | 563.29 ns | 3.87 ns | 120 B | 0.93× |
-| `JsonPopulator · new object` | 493.52 ns | 5.49 ns | 120 B | 1.06× |
-| `JsonPopulator · reused object` | 432.74 ns | 3.68 ns | 40 B | 1.20× |
-| `JsonPopulator · reuse + interning` | 430.47 ns | 5.20 ns | 0 B | 1.21× |
+| `System.Text.Json` | 530.64 ns | 4.04 ns | 120 B | 1.00× |
+| `System.Text.Json · generated` | 503.30 ns | 6.68 ns | 120 B | 1.05× |
+| `JsonPopulator · new object` | 476.48 ns | 3.00 ns | 120 B | 1.11× |
+| `JsonPopulator · reused object` | 432.69 ns | 3.17 ns | 40 B | 1.23× |
+| `JsonPopulator · reuse + interning` | 431.64 ns | 3.60 ns | 0 B | 1.23× |
 
 Reusing only the object still allocates its Symbol string. Reusing the object and an already interned symbol reaches 0 B/op.
 
@@ -76,9 +76,9 @@ The same trade, output buffer and writer lifetime, including the source-generate
 
 | Method | Mean | Error | Allocated | Speedup |
 |---|---:|---:|---:|---:|
-| `System.Text.Json` | 357.00 ns | 2.50 ns | 0 B | 1.00× |
-| `System.Text.Json · generated` | 268.14 ns | 1.38 ns | 0 B | 1.33× |
-| `JsonPushulator → reused writer` | 308.00 ns | 2.45 ns | 0 B | 1.16× |
+| `System.Text.Json` | 347.13 ns | 1.83 ns | 0 B | 1.00× |
+| `System.Text.Json · generated` | 268.85 ns | 2.54 ns | 0 B | 1.29× |
+| `JsonPushulator → reused writer` | 310.22 ns | 1.63 ns | 0 B | 1.12× |
 
 The source-generated framework writer is fastest here; all three variants allocate 0 B/op. Population of existing objects and reusable collections is covered separately above.
 
